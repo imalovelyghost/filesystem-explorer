@@ -7,6 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.lineicons.com/3.0/lineicons.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
     <title>FileSystem Explorer</title>
 </head>
@@ -67,6 +70,87 @@
             </div>
         </div>
     </div>
+
+    <div class="table-responsive mt-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm">
+                    Name
+                </div>
+                <div class="col-sm">
+                    Creation date
+                </div>
+                <div class="col-sm">
+                    Modified
+                </div>
+                <div class="col-sm">
+                    Size
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    <!-- <div class="font-30 text-primary"><i class="bx bxs-folder"></i></div> -->
+                    <?php
+                    $arrFiles = getFilesInfo();
+                    foreach ($arrFiles as $entry) {
+                    ?>
+                        <div class="row">
+                            <div class="col-sm">
+                                <?= fileIcon($entry); ?>
+                            </div>
+                            <div class="col-sm">
+                                <?= gmdate("Y-m-d\ H:i:s", $entry["ctime"]); ?>
+                            </div>
+                            <div class="col-sm">
+                                <?= gmdate("Y-m-d\ H:i:s", $entry["mtime"]); ?>
+                            </div>
+                            <div class="col-sm">
+                                <?= $entry["size"]; ?>
+                            </div>
+                        </div>
+                    <?php
+                    }
+                    ?>
+
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
+
+<?php
+function getFilesInfo()
+{
+    $directory  = (__DIR__ . "\\root\\");
+    $scanned_directory = array_diff(scandir($directory), array('..', '.'));
+
+    foreach ($scanned_directory as $entry) {
+        $i = $directory . '/' . $entry;
+        $stat = stat($i);
+        $result[] = [
+            'mtime' => $stat['mtime'],
+            'ctime' => $stat['ctime'],
+            'size' => $stat['size'],
+            'name' => basename($i),
+            // 'path' => preg_replace('@^\./@', '', $stat),
+            'is_dir' => is_dir($i),
+            'is_readable' => is_readable($i),
+            'is_writable' => is_writable($i),
+            'is_executable' => is_executable($i),
+        ];
+    }
+
+    return $result;
+}
+
+function fileIcon($file)
+{
+    if ($file["is_dir"]) {
+        return '<i class="bx bxs-folder text-primary"></i> ' . $file["name"];
+    } else {
+        return '<i class="bx bxs-file"></i> ' . $file["name"];
+    }
+}
+?>
