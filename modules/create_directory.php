@@ -3,6 +3,7 @@ $file = $_GET['file'] ?? '';
 $basePath = "../root/" . $file;
 $newName =  $_POST["directory-name"];
 $directoryName = $basePath . '/' . $newName;
+//echo ($directoryName);
 
 if (mkdir($directoryName, 0777)) {
     //if (mkdir($directoryName)) {
