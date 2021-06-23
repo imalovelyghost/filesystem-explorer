@@ -107,6 +107,7 @@
                                         <?php
                                         $file = $_GET["file"] ?? "";
                                         $arrFiles = getFilesInfo($file);
+
                                         if (is_array($arrFiles)) {
                                             foreach ($arrFiles as $entry) {
                                         ?>
@@ -115,10 +116,35 @@
                                                         <?= getAnchor($entry); ?>
                                                     </div>
                                                     <div class="col-sm">
-                                                        <?= gmdate("Y-m-d\ H:i:s", $entry["ctime"]); ?>
+                                                        <?php
+                                                        //$creationDayFormated = gmdate("Y-D-d\ H:i", $entry["ctime"]);
+                                                        $todayHour = date("H:i", $entry["ctime"]);
+                                                        $creationDayFormated = gmdate("Y D d", $entry["ctime"]);
+                                                        $creationDay = gmdate("Y/m/d", $entry["ctime"]);
+                                                        $today = (date("Y/m/d"));
+                                                        if ($today == $creationDay) {
+                                                            echo ($todayHour);
+                                                        } else {
+                                                            echo ($creationDayFormated);
+                                                        }
+                                                        ?>
                                                     </div>
                                                     <div class="col-sm">
-                                                        <?= gmdate("Y-m-d\ H:i:s", $entry["mtime"]); ?>
+                                                        <?php
+
+                                                        //gmdate("Y-D-d\ H:i", $entry["mtime"]) 
+                                                        $todayHourModified = date("H:i:s", $entry["ctime"]);
+                                                        $creationDayFormatedModified = gmdate("Y D d\ H:i", $entry["ctime"]);
+                                                        $creationDayModified = gmdate("Y/m/d", $entry["mtime"]);
+                                                        $todayModified = (date("Y/m/d"));
+                                                        if ($todayModified == $creationDayModified) {
+                                                            echo ($todayHourModified);
+                                                        } else {
+                                                            echo ($creationDayFormatedModified);
+                                                        }
+
+
+                                                        ?>
                                                     </div>
                                                     <div class="col-sm">
                                                         <?= $entry["size"]; ?>
@@ -155,9 +181,11 @@ function getFilesInfo($path)
 {
     $directory  = (__DIR__ . "/root/" . $path);
     $scanned_directory = array_diff(scandir($directory), array('..', '.'));
+    //echo ($directory);
+    //echo ($scanned_directory);
 
     foreach ($scanned_directory as $entry) {
-        $i = $directory . '/' . $entry;
+        $i = $directory . $entry;
         $stat = stat($i);
         $result[] = [
             'mtime' => $stat['mtime'],
@@ -171,7 +199,7 @@ function getFilesInfo($path)
             'is_executable' => is_executable($i),
         ];
     }
-
+    // print_r($result);
     return $result ?? 'This folder is empty';
 }
 
