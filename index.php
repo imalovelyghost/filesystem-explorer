@@ -14,6 +14,7 @@
     <link href="https://cdn.lineicons.com/3.0/lineicons.css" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="./assets/css/styles.css">
 
     <title>FileSystem Explorer</title>
 </head>
@@ -24,9 +25,9 @@
             <div class="col-3">
                 <div class="card">
 
-                    <div class="card-body" style="width: 12rem;">
+                    <div class="card-body">
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                            + Add Directory
+                            + Add
                         </button>
 
                         <!-- Modal -->
@@ -65,78 +66,92 @@
                                 <a href="javascript:;" class="list-group-item py-1"><i class="bx bx-plug me-2"></i><span>Audio</span></a>
                                 <a href="javascript:;" class="list-group-item py-1"><i class="bx bx-plug me-2"></i><span>Video</span></a>
                                 <a href="javascript:;" class="list-group-item py-1"><i class="bx bx-trash-alt me-2"></i><span>Deleted Files</span></a>
-
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-9">
-                <div class="fm-search">
-                    <div class="mb-0">
-                        <div class="input-group input-group-lg"> <span class="input-group-text bg-transparent"><i class="fa fa-search"></i></span>
-                            <input type="text" class="form-control" placeholder="Search the files">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="fm-search">
+                            <div class="mb-0">
+                                <div class="input-group input-group-lg"> <span class="input-group-text bg-transparent"><i class="fa fa-search"></i></span>
+                                    <input type="text" class="form-control" placeholder="Search the files">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive mt-3">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        Name
+                                    </div>
+                                    <div class="col-sm">
+                                        Creation date
+                                    </div>
+                                    <div class="col-sm">
+                                        Modified
+                                    </div>
+                                    <div class="col-sm">
+                                        Size
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <!-- <div class="font-30 text-primary"><i class="bx bxs-folder"></i></div> -->
+                                        <?php
+                                        $file = $_GET["file"] ?? "";
+                                        // echo $file;
+                                        $arrFiles = getFilesInfo($file);
+                                        if (is_array($arrFiles)) {
+                                            foreach ($arrFiles as $entry) {
+                                        ?>
+                                                <div class="row">
+                                                    <div class="col-sm">
+                                                        <?= fileIcon($entry); ?>
+                                                        <a href=<?= "?file=" . $entry["name"] ?>><?= $entry["name"] ?></a>
+                                                    </div>
+                                                    <div class="col-sm">
+                                                        <?= gmdate("Y-m-d\ H:i:s", $entry["ctime"]); ?>
+                                                    </div>
+                                                    <div class="col-sm">
+                                                        <?= gmdate("Y-m-d\ H:i:s", $entry["mtime"]); ?>
+                                                    </div>
+                                                    <div class="col-sm">
+                                                        <?= $entry["size"]; ?>
+                                                    </div>
+                                                </div>
+                                            <?php
+                                            }
+                                        } else {
+                                            ?>
+                                            <div class="col-12 mt-3 p-0">
+                                                <?= $arrFiles; ?>
+                                            </div>
+                                        <?php
+                                        }
+                                        ?>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div>INSERTAR DATOS PHP BRAHIM - f03 list fileeeeee</div>
             </div>
         </div>
     </div>
 
-    <div class="table-responsive mt-3">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm">
-                    Name
-                </div>
-                <div class="col-sm">
-                    Creation date
-                </div>
-                <div class="col-sm">
-                    Modified
-                </div>
-                <div class="col-sm">
-                    Size
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm">
-                    <!-- <div class="font-30 text-primary"><i class="bx bxs-folder"></i></div> -->
-                    <?php
-                    $arrFiles = getFilesInfo();
-                    foreach ($arrFiles as $entry) {
-                    ?>
-                        <div class="row">
-                            <div class="col-sm">
-                                <?= fileIcon($entry); ?>
-                            </div>
-                            <div class="col-sm">
-                                <?= gmdate("Y-m-d\ H:i:s", $entry["ctime"]); ?>
-                            </div>
-                            <div class="col-sm">
-                                <?= gmdate("Y-m-d\ H:i:s", $entry["mtime"]); ?>
-                            </div>
-                            <div class="col-sm">
-                                <?= $entry["size"]; ?>
-                            </div>
-                        </div>
-                    <?php
-                    }
-                    ?>
+    <script src="./assets/js/script.js" charset="utf-8"></script>
 
-                </div>
-            </div>
-        </div>
-    </div>
 </body>
 
 </html>
 
 <?php
-function getFilesInfo()
+function getFilesInfo($path)
 {
-    $directory  = (__DIR__ . "\\root\\");
+    $directory  = (__DIR__ . "\\root\\" . $path);
     $scanned_directory = array_diff(scandir($directory), array('..', '.'));
 
     foreach ($scanned_directory as $entry) {
@@ -155,15 +170,15 @@ function getFilesInfo()
         ];
     }
 
-    return $result;
+    return $result ?? 'This folder is empty';
 }
 
 function fileIcon($file)
 {
     if ($file["is_dir"]) {
-        return '<i class="bx bxs-folder text-primary"></i> ' . $file["name"];
+        return '<i class="bx bxs-folder text-primary"></i> ';
     } else {
-        return '<i class="bx bxs-file"></i> ' . $file["name"];
+        return '<i class="bx bxs-file"></i> ';
     }
 }
 ?>
