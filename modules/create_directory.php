@@ -1,14 +1,14 @@
 <?php
-$basePath = "../root/";
+$file = $_GET['file'] ?? '';
+$basePath = "../root/" . $file;
 $newName =  $_POST["directory-name"];
-$directoryName = $basePath . $newName;
-//mkdir($directoryName, 0777);
+$directoryName = $basePath . '/' . $newName;
 
 if (mkdir($directoryName, 0777)) {
-//if (mkdir($directoryName)) {
+    //if (mkdir($directoryName)) {
 
     // created
-    header("Location:../index.php");
+    header("Location:../index.php?file=$file");
 } else {
     //echo "This directory name already exists";
 }

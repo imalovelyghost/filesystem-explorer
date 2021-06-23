@@ -42,7 +42,11 @@
                                     </div>
                                     <div class="modal-body">
                                         <!-- <label data-error="wrong" data-success="right" for="defaultForm-email">Your email</label> -->
-                                        <form action="./modules/create_directory.php" method="post">
+                                        <?php
+                                        $file = $_GET['file'] ?? '';
+                                        $path = "./modules/create_directory.php?file=" . $file;
+                                        ?>
+                                        <form action=<?= $path ?> method="post">
                                             <!-- <input type="submit" class="btn btn-primary" value="+ Add File"> -->
                                             <input type="text" id="defaultForm-name" name="directory-name" placeholder="Insert directory name" class="form-control validate">
 
@@ -60,7 +64,7 @@
                         <h5 class="my-3">File Explorer</h5>
                         <div class="fm-menu">
                             <div class="list-group list-group-flush"> <a href="javascript:;" class="list-group-item py-1"><i class="bx bx-folder me-2"></i><span>All Files</span></a>
-                                <a href="javascript:;" class="list-group-item py-1"><i class="bx bx-devices me-2"></i><span>Root</span></a>
+                                <a href="./" class="list-group-item py-1"><i class="bx bx-devices me-2"></i><span>Root</span></a>
                                 <a href="javascript:;" class="list-group-item py-1"><i class="bx bx-analyse me-2"></i><span>Documents</span></a>
                                 <a href="javascript:;" class="list-group-item py-1"><i class="bx bx-plug me-2"></i><span>Images</span></a>
                                 <a href="javascript:;" class="list-group-item py-1"><i class="bx bx-plug me-2"></i><span>Audio</span></a>
@@ -101,20 +105,15 @@
                                     <div class="col-sm">
                                         <!-- <div class="font-30 text-primary"><i class="bx bxs-folder"></i></div> -->
                                         <?php
-
-                                        //$file = $_GET["file"] ?? "";
-                                        $file = $_GET["file"];
-                                        // echo "INN";
-                                        // echo $file;
+                                        $file = $_GET["file"] ?? "";
                                         $arrFiles = getFilesInfo($file);
-                                        // echo ($arrFiles);
+
                                         if (is_array($arrFiles)) {
                                             foreach ($arrFiles as $entry) {
                                         ?>
                                                 <div class="row">
                                                     <div class="col-sm">
-                                                        <?= fileIcon($entry); ?>
-                                                        <a href=<?= "?file=" . $entry["name"] ?>><?= $entry["name"] ?></a>
+                                                        <?= getAnchor($entry); ?>
                                                     </div>
                                                     <div class="col-sm">
                                                         <?php
@@ -202,6 +201,15 @@ function getFilesInfo($path)
     }
     // print_r($result);
     return $result ?? 'This folder is empty';
+}
+
+function getAnchor($entry)
+{
+    $name = $entry["name"];
+    $href = isset($_GET['file']) ? $_GET['file'] . '/' . $name :  $name;
+
+    echo fileIcon($entry);
+    echo "<a href= \"?file=$href\"> $name</a>";
 }
 
 function fileIcon($file)
