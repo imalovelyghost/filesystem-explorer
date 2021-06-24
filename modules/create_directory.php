@@ -4,9 +4,9 @@ $basePath = "../root/" . $file;
 $newName =  $_POST["directory-name"];
 $directoryName = $basePath . '/' . $newName;
 
-if (mkdir($directoryName, 0777)) {
-    //if (mkdir($directoryName)) {
+echo $directoryName;
 
+if (mkdir($directoryName, 0777)) {
     // created
     header("Location:../index.php?file=$file");
 } else {

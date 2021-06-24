@@ -131,7 +131,6 @@
                                                     </div>
                                                     <div class="col-sm">
                                                         <?php
-
                                                         //gmdate("Y-D-d\ H:i", $entry["mtime"]) 
                                                         $todayHourModified = date("H:i:s", $entry["ctime"]);
                                                         $creationDayFormatedModified = gmdate("Y D d\ H:i", $entry["ctime"]);
@@ -142,8 +141,6 @@
                                                         } else {
                                                             echo ($creationDayFormatedModified);
                                                         }
-
-
                                                         ?>
                                                     </div>
                                                     <div class="col-sm">
@@ -181,11 +178,9 @@ function getFilesInfo($path)
 {
     $directory  = (__DIR__ . "/root/" . $path);
     $scanned_directory = array_diff(scandir($directory), array('..', '.'));
-    //echo ($directory);
-    //echo ($scanned_directory);
 
     foreach ($scanned_directory as $entry) {
-        $i = $directory . $entry;
+        $i = $directory . '/' . $entry;
         $stat = stat($i);
         $result[] = [
             'mtime' => $stat['mtime'],
