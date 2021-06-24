@@ -144,7 +144,18 @@
                                                         ?>
                                                     </div>
                                                     <div class="col-sm">
-                                                        <?= $entry["size"]; ?>
+                                                        <?php
+
+                                                        $size = ($entry["size"]);
+                                                        $res = $size;
+                                                        $x = 0;
+                                                        $units = array('Kb', 'Mb', 'Gb');
+                                                        while ($res >= 1024) {
+                                                            $res = $res / 1024;
+                                                            $x++;
+                                                        }
+                                                        echo round($res, 2), $units[$x - 1];
+                                                        ?>
                                                     </div>
                                                 </div>
                                             <?php
@@ -201,7 +212,9 @@ function getFilesInfo($path)
 function getAnchor($entry)
 {
     $name = $entry["name"];
+    //echo ($name);
     $href = isset($_GET['file']) ? $_GET['file'] . '/' . $name :  $name;
+    //echo ($href);
 
     echo fileIcon($entry);
     echo "<a href= \"?file=$href\"> $name</a>";
