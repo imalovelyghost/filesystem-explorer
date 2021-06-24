@@ -1,3 +1,7 @@
+<?php
+require_once('./modules/functions.php')
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,155 +27,20 @@
     <div class="container">
         <div class="row">
             <div class="col-3">
-                <div class="card">
-
-                    <div class="card-body">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                            + Add
-                        </button>
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <!-- <label data-error="wrong" data-success="right" for="defaultForm-email">Your email</label> -->
-                                        <?php
-                                        $file = $_GET['file'] ?? '';
-                                        $path = "./modules/create_directory.php?file=" . $file;
-                                        ?>
-                                        <form action=<?= $path ?> method="post">
-                                            <!-- <input type="submit" class="btn btn-primary" value="+ Add File"> -->
-                                            <input type="text" id="defaultForm-name" name="directory-name" placeholder="Insert directory name" class="form-control validate">
-
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Save changes</button>
-                                    </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Modal -->
-
-                        <h5 class="my-3">File Explorer</h5>
-                        <div class="fm-menu">
-                            <div class="list-group list-group-flush"> <a href="javascript:;" class="list-group-item py-1"><i class="bx bx-folder me-2"></i><span>All Files</span></a>
-                                <a href="./" class="list-group-item py-1"><i class="bx bx-devices me-2"></i><span>Root</span></a>
-                                <a href="javascript:;" class="list-group-item py-1"><i class="bx bx-analyse me-2"></i><span>Documents</span></a>
-                                <a href="javascript:;" class="list-group-item py-1"><i class="bx bx-plug me-2"></i><span>Images</span></a>
-                                <a href="javascript:;" class="list-group-item py-1"><i class="bx bx-plug me-2"></i><span>Audio</span></a>
-                                <a href="javascript:;" class="list-group-item py-1"><i class="bx bx-plug me-2"></i><span>Video</span></a>
-                                <a href="javascript:;" class="list-group-item py-1"><i class="bx bx-trash-alt me-2"></i><span>Deleted Files</span></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <?php
+                // import aside module
+                require_once('./modules/aside.php');
+                ?>
             </div>
             <div class="col-9">
                 <div class="card">
                     <div class="card-body">
-                        <div class="fm-search">
-                            <div class="mb-0">
-                                <div class="input-group input-group-lg"> <span class="input-group-text bg-transparent"><i class="fa fa-search"></i></span>
-                                    <input type="text" class="form-control" placeholder="Search the files">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="table-responsive mt-3">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-sm">
-                                        Name
-                                    </div>
-                                    <div class="col-sm">
-                                        Creation date
-                                    </div>
-                                    <div class="col-sm">
-                                        Modified
-                                    </div>
-                                    <div class="col-sm">
-                                        Size
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm">
-                                        <!-- <div class="font-30 text-primary"><i class="bx bxs-folder"></i></div> -->
-                                        <?php
-                                        $file = $_GET["file"] ?? "";
-                                        $arrFiles = getFilesInfo($file);
-
-                                        if (is_array($arrFiles)) {
-                                            foreach ($arrFiles as $entry) {
-                                        ?>
-                                                <div class="row">
-                                                    <div class="col-sm">
-                                                        <?= getAnchor($entry); ?>
-                                                    </div>
-                                                    <div class="col-sm">
-                                                        <?php
-                                                        //$creationDayFormated = gmdate("Y-D-d\ H:i", $entry["ctime"]);
-                                                        $todayHour = date("H:i", $entry["ctime"]);
-                                                        $creationDayFormated = gmdate("Y D d", $entry["ctime"]);
-                                                        $creationDay = gmdate("Y/m/d", $entry["ctime"]);
-                                                        $today = (date("Y/m/d"));
-                                                        if ($today == $creationDay) {
-                                                            echo ($todayHour);
-                                                        } else {
-                                                            echo ($creationDayFormated);
-                                                        }
-                                                        ?>
-                                                    </div>
-                                                    <div class="col-sm">
-                                                        <?php
-                                                        //gmdate("Y-D-d\ H:i", $entry["mtime"]) 
-                                                        $todayHourModified = date("H:i:s", $entry["ctime"]);
-                                                        $creationDayFormatedModified = gmdate("Y D d\ H:i", $entry["ctime"]);
-                                                        $creationDayModified = gmdate("Y/m/d", $entry["mtime"]);
-                                                        $todayModified = (date("Y/m/d"));
-                                                        if ($todayModified == $creationDayModified) {
-                                                            echo ($todayHourModified);
-                                                        } else {
-                                                            echo ($creationDayFormatedModified);
-                                                        }
-                                                        ?>
-                                                    </div>
-                                                    <div class="col-sm">
-                                                        <?php
-
-                                                        $size = ($entry["size"]);
-                                                        $res = $size;
-                                                        $x = 0;
-                                                        $units = array('Kb', 'Mb', 'Gb');
-                                                        while ($res >= 1024) {
-                                                            $res = $res / 1024;
-                                                            $x++;
-                                                        }
-                                                        echo round($res, 2), $units[$x - 1];
-                                                        ?>
-                                                    </div>
-                                                </div>
-                                            <?php
-                                            }
-                                        } else {
-                                            ?>
-                                            <div class="col-12 mt-3 p-0">
-                                                <?= $arrFiles; ?>
-                                            </div>
-                                        <?php
-                                        }
-                                        ?>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <?php
+                        // import search module
+                        require_once('./modules/search.php');
+                        // import module to display files and directories 
+                        require_once('./modules/manager.php');
+                        ?>
                     </div>
                 </div>
             </div>
@@ -183,49 +52,3 @@
 </body>
 
 </html>
-
-<?php
-function getFilesInfo($path)
-{
-    $directory  = (__DIR__ . "/root/" . $path);
-    $scanned_directory = array_diff(scandir($directory), array('..', '.'));
-
-    foreach ($scanned_directory as $entry) {
-        $i = $directory . '/' . $entry;
-        $stat = stat($i);
-        $result[] = [
-            'mtime' => $stat['mtime'],
-            'ctime' => $stat['ctime'],
-            'size' => $stat['size'],
-            'name' => basename($i),
-            // 'path' => preg_replace('@^\./@', '', $stat),
-            'is_dir' => is_dir($i),
-            'is_readable' => is_readable($i),
-            'is_writable' => is_writable($i),
-            'is_executable' => is_executable($i),
-        ];
-    }
-    // print_r($result);
-    return $result ?? 'This folder is empty';
-}
-
-function getAnchor($entry)
-{
-    $name = $entry["name"];
-    //echo ($name);
-    $href = isset($_GET['file']) ? $_GET['file'] . '/' . $name :  $name;
-    //echo ($href);
-
-    echo fileIcon($entry);
-    echo "<a href= \"?file=$href\"> $name</a>";
-}
-
-function fileIcon($file)
-{
-    if ($file["is_dir"]) {
-        return '<i class="bx bxs-folder text-primary"></i> ';
-    } else {
-        return '<i class="bx bxs-file"></i> ';
-    }
-}
-?>
