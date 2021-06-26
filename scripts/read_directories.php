@@ -18,4 +18,5 @@ foreach ($scanned_directory as $entry) {
         'is_executable' => is_executable($i),
     ];
 }
+
 echo json_encode(["results" => $result]);

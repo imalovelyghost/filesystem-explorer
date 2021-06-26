@@ -5,9 +5,8 @@ Simple PHP File Manager
 Copyright Brahim & Einar
  */
 
-$file = $_GET['file'] ?? '';
-// module to create directories
-$path = "./modules/create_directory.php?file=" . $file;
+$file = $_GET['file'] ?? '.';
+$path = "./scripts/manage_dir.php?file=" . $file;
 ?>
 
 <div class="card">
@@ -25,14 +24,15 @@ $path = "./modules/create_directory.php?file=" . $file;
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
-                        <form action=<?= $path ?> method="post">
+                    <!-- <form action="<?= $path ?>" method="post"> -->
+                    <form action="" method="post" id="mkdir">
+                        <div class="modal-body">
                             <input type="text" id="defaultForm-name" name="directory-name" placeholder="Insert directory name" class="form-control validate">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                    </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">New folder</button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -52,3 +52,25 @@ $path = "./modules/create_directory.php?file=" . $file;
         </div>
     </div>
 </div>
+
+<script>
+    $('#mkdir').submit(function(e) {
+        e.preventDefault();
+
+        $dir = $(this).find('[name="directory-name"]');
+        $dir.val().length && $.post("<?= $path ?>", {
+            'action': 'mkdir',
+            dirname: $dir.val(),
+        }, function(data) {
+            if (data.status) {
+                window.location.reload();
+            } else {
+                console.log("Error doing ", data.action);
+            }
+        }, 'json');
+    });
+
+    $('#exampleModalCenter').on('shown.bs.modal', function() {
+        $('#defaultForm-name').trigger('focus')
+    })
+</script>
