@@ -59,6 +59,7 @@ require_once('./modules/functions.php');
                                 <?php
                                 // import module to display files and directories 
                                 require_once('./modules/manager.php');
+                                require_once('./modules/alert.php');
                                 ?>
                             </div>
                         </div>

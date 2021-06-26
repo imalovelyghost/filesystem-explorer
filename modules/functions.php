@@ -78,3 +78,10 @@ function fileIcon($file)
         return '<i class="bx bxs-file"></i> ';
     }
 }
+
+function asBytes($value)
+{
+    $ini_v = trim($value);
+    $str = ['g' => 1 << 30, 'm' => 1 << 20, 'k' => 1 << 10];
+    return intval($ini_v) * ($str[strtolower(substr($ini_v, -1))] ?: 1);
+}

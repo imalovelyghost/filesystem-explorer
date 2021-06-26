@@ -1,0 +1,6 @@
+<div class="alert alert-danger fade side-alert" role="alert" id="danger-alert">
+    Error:...
+</div>
+<div class="alert alert-success fade side-alert" role="alert" id="success-alert">
+    Success:...
+</div>
