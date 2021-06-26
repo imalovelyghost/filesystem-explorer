@@ -183,6 +183,21 @@
 
     <script src="./assets/js/script.js" charset="utf-8"></script>
 
+    <!-- Upload form -->
+
+    <!-- https://www.youtube.com/watch?v=JaRq73y5MJk -->
+
+    <form action="uploads.php" method="post" enctype="multipart/form-data">
+        <input type="file" name="file">
+        <button type="submit" name="submit">UPLOAD</button>
+
+    </form>
+
+
+
+
+    <!-- Upload form -->
+
 </body>
 
 </html>
