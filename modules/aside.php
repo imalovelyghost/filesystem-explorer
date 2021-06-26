@@ -17,7 +17,7 @@ $MAX_UPLOAD_SIZE = min(asBytes(ini_get('post_max_size')), asBytes(ini_get('uploa
             <button class="btn btn-primary" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 + Add
             </button>
-            <div class="dropdown-menu" data-file="<?= $entry["path"]; ?>" aria-labelledby="dropdownMenuButton">
+            <div class="dropdown-menu shadow-lg" data-file="<?= $entry["path"]; ?>" aria-labelledby="dropdownMenuButton">
                 <button type="button" class="dropdown-item" data-toggle="modal" data-target="#exampleModalCenter">
                     Directory
                 </button>
@@ -115,6 +115,28 @@ $MAX_UPLOAD_SIZE = min(asBytes(ini_get('post_max_size')), asBytes(ini_get('uploa
         }
 
         $.ajax({
+                xhr: function() {
+                    let xhr = new window.XMLHttpRequest();
+                    xhr.upload.addEventListener('loadstart', function(e) {
+                        $('#progress-alert').addClass('show');
+                    })
+                    xhr.upload.addEventListener('progress', function(e) {
+                        if (e.lengthComputable) {
+                            let percent = Math.round((e.loaded / e.total * 100));
+                            $('.progress-bar').css('width', percent + '%');
+                        }
+                    });
+                    xhr.upload.addEventListener('load', function(e) {
+                        $('#progress-alert').removeClass('show');
+                        $('#success-alert').addClass('show');
+                        $('#success-alert').
+                        text('File ' + file.name + ' uploaded successfully');
+                        window.setTimeout(function() {
+                            window.location.reload();
+                        }, 2000);
+                    });
+                    return xhr;
+                },
                 url: "./scripts/upload_files.php",
                 type: "post",
                 dataType: "html",
@@ -124,12 +146,7 @@ $MAX_UPLOAD_SIZE = min(asBytes(ini_get('post_max_size')), asBytes(ini_get('uploa
                 processData: false
             })
             .done(function(res) {
-                $('#success-alert').addClass('show');
-                $('#success-alert').
-                text('File ' + file.name + ' uploaded successfully');
-                window.setTimeout(function() {
-                    window.location.reload();
-                }, 2000);
+                console.log(res);
             });
     }
 </script>
