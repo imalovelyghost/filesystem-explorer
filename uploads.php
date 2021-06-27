@@ -14,7 +14,7 @@ if (isset($_POST['submit'])) {
     $fileExt = explode('.', $fileName);
     $fileActualExt = strtolower(end($fileExt));
 
-    $allowed = array('jpg', 'jpeg', 'png', 'pdf');
+    $allowed = array('doc', 'csv', 'jpg', 'png', 'txt', 'ppt', 'odt', 'pdf', 'zip', 'rar', 'exe', 'svg', 'mp3', 'mp4');
 
     if (in_array($fileActualExt, $allowed)) {
         if ($fileError === 0) {
