@@ -42,7 +42,7 @@ function getFilesInfo($path)
             // 'path' => preg_replace('@^\./@', '', $stat),
             'path' => $path ?  $path  . '/' . $entry :  $entry,
             'is_dir' => is_dir($i),
-            'is_media' => is_media($i),
+            'is_media' => is_audio($i) || is_video($i),
             'is_image' => is_image($i),
             'is_readable' => is_readable($i),
             'is_writable' => is_writable($i),
@@ -59,19 +59,24 @@ function getAnchor($entry)
 {
     $name = $entry["name"];
     $href = isset($_GET['file']) ? $_GET['file'] . '/' . $name :  $name;
+    $type = 'unknown';
 
     echo fileIcon($entry);
     if ($entry["is_dir"]) {
-        echo "<a href= \"?file=$href\"data-type=\"dir\"> $name </a>";
-        return;
-    } elseif ($entry["is_media"]) {
-        echo "<a href= \"./root/$href\"data-type=\"iframe\"> $name </a>";
-        return;
-    } elseif ($entry["is_image"]) {
-        echo "<a href= \"./root/$href\"data-type=\"image\"> $name </a>";
+        echo "<a href=\"?file=$href\"data-type=\"dir\"> 
+            $name 
+        </a>";
         return;
     }
-    echo "<a href= \"#\"data-type=\"other\"> $name</a>";
+
+    if ($entry["is_media"]) {
+        $type  = 'iframe';
+    } elseif ($entry["is_image"]) {
+        $type  = 'image';
+    }
+    echo "<a href= \"./root/$href\"data-type=\"$type\"> 
+            $name 
+        </a>";
 }
 
 /*
@@ -79,9 +84,13 @@ function getAnchor($entry)
 function fileIcon($file)
 {
     if ($file["is_dir"]) {
-        return '<i class="bx bxs-folder text-primary"></i>';
+        return '<i class="bi bi-folder-fill text-primary"></i>';
+    } elseif ($file["is_image"]) {
+        echo '<i class="bi bi-file-earmark-image"></i>';
+    } elseif ($file["is_media"]) {
+        echo '<i class="bi bi-file-earmark-play-fill"></i>';
     } else {
-        return '<i class="bx bxs-file"></i> ';
+        return '<i class="bi bi-file-earmark"></i> ';
     }
 }
 
@@ -99,17 +108,28 @@ function asBytes($value)
 
 /*
 */
-function is_media($tmp)
+function is_audio($tmp)
 {
     // check REAL MIME type
     $finfo = finfo_open(FILEINFO_MIME_TYPE);
     $type = finfo_file($finfo, $tmp);
     finfo_close($finfo);
 
-    if (
-        str_contains($type, 'audio/') ||
-        str_contains($type, 'video/')
-    ) {
+    if (str_contains($type, 'audio/')) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function is_video($tmp)
+{
+    // check REAL MIME type
+    $finfo = finfo_open(FILEINFO_MIME_TYPE);
+    $type = finfo_file($finfo, $tmp);
+    finfo_close($finfo);
+
+    if (str_contains($type, 'video/')) {
         return true;
     } else {
         return false;

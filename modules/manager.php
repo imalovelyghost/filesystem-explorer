@@ -51,7 +51,7 @@ $arrFiles = getFilesInfo($file);
                     <div class="col-sm-2 d-flex justify-content-end">
                         <div class="dropdown">
                             <button class="btn " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fa fa-ellipsis-h"></i>
+                                <i class="bi bi-three-dots"></i>
                             </button>
                             <div class="dropdown-menu shadow-lg" data-file="<?= $entry["path"]; ?>" aria-labelledby="dropdownMenuButton">
                                 <a class="dropdown-item delete" href="#">Delete</a>
