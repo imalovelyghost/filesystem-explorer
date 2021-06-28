@@ -19,11 +19,19 @@ $MAX_UPLOAD_SIZE = min(asBytes(ini_get('post_max_size')), asBytes(ini_get('uploa
             </button>
             <div class="dropdown-menu shadow-lg" data-file="<?= $entry["path"]; ?>" aria-labelledby="dropdownMenuButton">
                 <button type="button" class="dropdown-item" data-toggle="modal" data-target="#exampleModalCenter">
-                    Directory
+                    <i class="bi bi-folder-plus"></i>
+                    <span>Directory</span>
                 </button>
                 <button type="button" class="dropdown-item">
-                    <label for="file">Upload file</label>
+                    <label for="file" class="m-0">
+                        <i class="bi bi-file-arrow-up"></i>
+                        <span>Upload file</span>
+                    </label>
                     <input type="file" name="file" id="file" class="input-file" multiple />
+                </button>
+                <button type="button" class="dropdown-item">
+                    <i class="bi bi-folder-symlink"></i>
+                    <span>Upload folder</span>
                 </button>
             </div>
         </div>
