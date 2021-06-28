@@ -111,7 +111,7 @@ $arrFiles = getFilesInfo($file);
             file: $delFile.val(),
             dirname: $dir.val(),
         }, function(data) {
-            console.log(data)
+            console.log(data);
             if (data.status) {
                 window.location.reload();
             } else {
@@ -124,5 +124,12 @@ $arrFiles = getFilesInfo($file);
 
     $('#renameModalCenter').on('shown.bs.modal', function() {
         $('#renameForm-name').trigger('focus');
-    })
+    });
+
+    $('a[data-type="iframe"], [data-type="image"]').each(function() {
+        $(this).magnificPopup({
+            type: $(this).attr('data-type'),
+            src: $(this).attr('href'),
+        });
+    });
 </script>

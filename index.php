@@ -18,6 +18,10 @@ require_once('./modules/functions.php');
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="./assets/css/styles.css">
 
+    <!-- Magnific Popup core CSS file -->
+    <link rel="stylesheet" href="./libs/Magnific-Popup-master/dist/magnific-popup.css">
+    <script src="./libs/Magnific-Popup-master/dist/jquery.magnific-popup.min.js"></script>
+
     <title>FileSystem Explorer</title>
 </head>
 
@@ -61,6 +65,7 @@ require_once('./modules/functions.php');
                                 require_once('./modules/manager.php');
                                 require_once('./modules/alert.php');
                                 ?>
+
                             </div>
                         </div>
                     </div>
