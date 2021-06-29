@@ -6,7 +6,8 @@ Copyright Brahim & Einar
  */
 
 $file = $_GET["file"] ?? "";
-$arrFiles = getFilesInfo($file);
+$path = dirname(__DIR__) . "/root/" . $file;
+$arrFiles = getFilesInfo($path);
 ?>
 
 <div class="row">

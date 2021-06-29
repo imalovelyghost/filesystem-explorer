@@ -28,18 +28,16 @@ function FormatSize($file)
  */
 function getFilesInfo($path)
 {
-    $directory  = (dirname(__DIR__) . "/root/" . $path);
-    $scanned_directory = array_diff(scandir($directory), array('..', '.'));
+    $scanned_directory = array_diff(scandir($path), array('..', '.'));
 
     foreach ($scanned_directory as $entry) {
-        $i = $directory . '/' . $entry;
+        $i = $path . '/' . $entry;
         $stat = stat($i);
         $result[] = [
             'mtime' => $stat['mtime'],
             'ctime' => $stat['ctime'],
             'size' => $stat['size'],
             'name' => basename($i),
-            // 'path' => preg_replace('@^\./@', '', $stat),
             'path' => $path ?  $path  . '/' . $entry :  $entry,
             'is_dir' => is_dir($i),
             'is_media' => is_audio($i) || is_video($i),
@@ -49,7 +47,6 @@ function getFilesInfo($path)
             'is_executable' => is_executable($i),
         ];
     }
-    // print_r($result);
     return $result ?? 'This folder is empty';
 }
 
@@ -62,13 +59,13 @@ function getAnchor($entry)
     $type = 'unknown';
 
     echo fileIcon($entry);
+
     if ($entry["is_dir"]) {
         echo "<a href=\"?file=$href\"data-type=\"dir\"> 
             $name 
         </a>";
         return;
     }
-
     if ($entry["is_media"]) {
         $type  = 'iframe';
     } elseif ($entry["is_image"]) {
@@ -86,9 +83,9 @@ function fileIcon($file)
     if ($file["is_dir"]) {
         return '<i class="bi bi-folder-fill text-primary"></i>';
     } elseif ($file["is_image"]) {
-        echo '<i class="bi bi-file-earmark-image"></i>';
+        return  '<i class="bi bi-file-earmark-image"></i>';
     } elseif ($file["is_media"]) {
-        echo '<i class="bi bi-file-earmark-play-fill"></i>';
+        return '<i class="bi bi-file-earmark-play-fill"></i>';
     } else {
         return '<i class="bi bi-file-earmark"></i> ';
     }
@@ -122,6 +119,8 @@ function is_audio($tmp)
     }
 }
 
+/*
+*/
 function is_video($tmp)
 {
     // check REAL MIME type
@@ -150,4 +149,52 @@ function is_image($tmp)
     } else {
         return false;
     }
+}
+
+/*
+ * Search Functions
+ * The same result is achieved in two different ways
+ * searchFiles: 
+ * searchFilesClass: uses Recursive PHP classes
+ */
+function searchFiles($dir, $search)
+{
+    $bsName = strtolower(basename($dir));
+    $search = strtolower($search);
+
+    if (is_dir($dir)) {
+        $results = array();
+        $files = array_diff(scandir($dir), ['.', '..']);
+        str_contains($bsName, $search) && $results[] = $dir;
+        foreach ($files as $file) {
+            $route = searchFiles("$dir/$file", $search);
+            $route && $results[] = $route;
+        }
+        return $results;
+    }
+    if (str_contains($bsName, $search))
+        return $dir;
+}
+
+/*
+*/
+function searchFilesClass($dir, $search)
+{
+    $directory  = new RecursiveDirectoryIterator($dir);
+    $iterator = new RecursiveIteratorIterator($directory);
+    $search = strtolower($search);
+    $files = array();
+
+    foreach ($iterator as $info) {
+        if (is_dir($info)) {
+            $folder = dirname($info->getPathname());
+            $bsName = strtolower(basename($folder));
+            if (str_contains($bsName, $search)) $files[] = $folder;
+            continue;
+        }
+        $bsName = strtolower(basename($info->getPathname()));
+        if (str_contains($bsName, $search)) $files[] = $info->getPathname();
+    }
+
+    return array_unique($files);
 }

@@ -14,23 +14,49 @@
 </div>
 
 <script>
-    $('#search-input').change(function(e) {
+    $('#search-input').on('input', function(e) {
         e.preventDefault();
         dir = '<?= $_GET["file"] ?? "" ?>';
         search = $(this).val();
+
+        let formData = new FormData();
+        formData.append("dir", dir);
+        formData.append("search", search);
 
         $(this).val().length && $.post("./scripts/search_files.php", {
             search,
             dir,
         }, function(data) {
-            console.log(data);
-            // if (data.status) {
-            //     window.location.reload();
-            // } else {
-            //     $('#renameForm-name').addClass('is-invalid');
-            //     $('.renameForm-name').text(data.msg);
-            //     console.log("Error doing ", data.action);
-            // }
+            console.log(data)
+            list(data);
         }, 'json');
     });
+
+    $('#search-input').blur(function(e) {
+        if (!$(this).val().length) {
+            $('.files-container').removeClass('d-none');
+            $('.search-container').addClass('d-none');
+        }
+    });
+
+    function list(data) {
+        $('.files-container').addClass('d-none');
+        $('.search-container').removeClass('d-none');
+        $('.search-result').empty();
+
+        if (data.results.length) {
+            $.each(data.results, function(index, value) {
+                const content = $("<div></div>")
+                    .addClass('row')
+                    .append($(`<div class='col-sm'>${value.icon}
+                        ${value.name}</div>`))
+                    .append($(`<div class='col-sm'>${value.path}</div>`))
+                    .append($("<div class='col-sm-2'></div>"));
+
+                $('.search-result').append(content);
+            })
+        } else {
+            $('.search-result').append("No results found");
+        }
+    }
 </script>
