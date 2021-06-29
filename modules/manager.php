@@ -6,8 +6,7 @@ Copyright Brahim & Einar
  */
 
 $file = $_GET["file"] ?? "";
-$path = dirname(__DIR__) . "/root/" . $file;
-$arrFiles = getFilesInfo($path);
+$arrFiles = getFilesInfo($file);
 ?>
 
 <div class="row">
@@ -79,11 +78,13 @@ $arrFiles = getFilesInfo($path);
 <script>
     $('.delete').click(function(e) {
         e.preventDefault();
+        console.log($(this).parent().attr('data-file'));
 
         $.post("./scripts/manage_dir.php", {
             'action': 'delete',
             file: $(this).parent().attr('data-file'),
         }, function(data) {
+            console.log(data);
             if (data.status) {
                 window.location.reload();
             } else {

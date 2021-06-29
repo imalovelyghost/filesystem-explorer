@@ -28,16 +28,18 @@ function FormatSize($file)
  */
 function getFilesInfo($path)
 {
-    $scanned_directory = array_diff(scandir($path), array('..', '.'));
+    $directory  = (dirname(__DIR__) . "/root/" . $path);
+    $scanned_directory = array_diff(scandir($directory), array('..', '.'));
 
     foreach ($scanned_directory as $entry) {
-        $i = $path . '/' . $entry;
+        $i = $directory . '/' . $entry;
         $stat = stat($i);
         $result[] = [
             'mtime' => $stat['mtime'],
             'ctime' => $stat['ctime'],
             'size' => $stat['size'],
             'name' => basename($i),
+            // 'path' => preg_replace('@^\./@', '', $stat),
             'path' => $path ?  $path  . '/' . $entry :  $entry,
             'is_dir' => is_dir($i),
             'is_media' => is_audio($i) || is_video($i),
@@ -47,6 +49,7 @@ function getFilesInfo($path)
             'is_executable' => is_executable($i),
         ];
     }
+    // print_r($result);
     return $result ?? 'This folder is empty';
 }
 

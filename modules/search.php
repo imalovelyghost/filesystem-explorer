@@ -48,8 +48,7 @@
             $.each(data.results, function(index, value) {
                 const content = $("<div></div>")
                     .addClass('row')
-                    .append($(`<div class='col-sm'>${value.icon}
-                        ${value.name}</div>`))
+                    .append($(`<div class='col-sm'>${value.icon}${value.name}</div>`))
                     .append($(`<div class='col-sm'>${value.path}</div>`))
                     .append($("<div class='col-sm-2'></div>"));
 
