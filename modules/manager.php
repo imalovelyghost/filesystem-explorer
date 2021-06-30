@@ -17,7 +17,10 @@ $arrFiles = getFilesInfo($file);
         ?>
                 <div class="row">
                     <div class="col-sm">
-                        <?= getAnchor($entry); ?>
+                        <?php
+                        echo fileIcon($entry);
+                        echo getAnchor($entry);
+                        ?>
                     </div>
                     <div class="col-sm">
                         <?php
@@ -78,11 +81,13 @@ $arrFiles = getFilesInfo($file);
 <script>
     $('.delete').click(function(e) {
         e.preventDefault();
+        console.log($(this).parent().attr('data-file'));
 
         $.post("./scripts/manage_dir.php", {
             'action': 'delete',
             file: $(this).parent().attr('data-file'),
         }, function(data) {
+            console.log(data);
             if (data.status) {
                 window.location.reload();
             } else {

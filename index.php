@@ -44,29 +44,44 @@ require_once('./modules/functions.php');
                         ?>
                         <div class="mt-3">
                             <div class="container">
-                                <div class="row">
-                                    <div class="col-sm">
-                                        Name
+                                <div class="files-container">
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            Name
+                                        </div>
+                                        <div class="col-sm">
+                                            Creation date
+                                        </div>
+                                        <div class="col-sm">
+                                            Modified
+                                        </div>
+                                        <div class="col-sm">
+                                            Size
+                                        </div>
+                                        <div class="col-sm-2">
+                                        </div>
                                     </div>
-                                    <div class="col-sm">
-                                        Creation date
-                                    </div>
-                                    <div class="col-sm">
-                                        Modified
-                                    </div>
-                                    <div class="col-sm">
-                                        Size
-                                    </div>
-                                    <div class="col-sm-2">
-                                    </div>
+                                    <?php
+                                    // import module to display files and directories 
+                                    require_once('./modules/manager.php');
+                                    ?>
                                 </div>
-
+                                <div class="search-container d-none">
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            Name
+                                        </div>
+                                        <div class="col-sm">
+                                            path
+                                        </div>
+                                        <div class="col-sm-2">
+                                        </div>
+                                    </div>
+                                    <div class="search-result"></div>
+                                </div>
                                 <?php
-                                // import module to display files and directories 
-                                require_once('./modules/manager.php');
                                 require_once('./modules/alert.php');
                                 ?>
-
                             </div>
                         </div>
                     </div>
