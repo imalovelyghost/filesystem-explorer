@@ -23,30 +23,10 @@ $arrFiles = getFilesInfo($file);
                         ?>
                     </div>
                     <div class="col-sm">
-                        <?php
-                        $todayHour = date("H:i", $entry["ctime"]);
-                        $creationDayFormatted = gmdate("Y D d", $entry["ctime"]);
-                        $creationDay = gmdate("Y/m/d", $entry["ctime"]);
-                        $today = (date("Y/m/d"));
-                        if ($today == $creationDay) {
-                            echo ($todayHour);
-                        } else {
-                            echo ($creationDayFormatted);
-                        }
-                        ?>
+                        <?php formatDate($entry["ctime"]); ?>
                     </div>
                     <div class="col-sm">
-                        <?php
-                        $todayHourModified = date("H:i:s", $entry["mtime"]);
-                        $creationDayFormattedModified = gmdate("Y D d\ H:i", $entry["mtime"]);
-                        $creationDayModified = gmdate("Y/m/d", $entry["mtime"]);
-                        $todayModified = (date("Y/m/d"));
-                        if ($todayModified == $creationDayModified) {
-                            echo ($todayHourModified);
-                        } else {
-                            echo ($creationDayFormattedModified);
-                        }
-                        ?>
+                        <?php formatDate($entry["mtime"]); ?>
                     </div>
                     <div class="col-sm">
                         <?= FormatSize($entry); ?>
@@ -81,8 +61,6 @@ $arrFiles = getFilesInfo($file);
 <script>
     $('.delete').click(function(e) {
         e.preventDefault();
-        console.log($(this).parent().attr('data-file'));
-
         $.post("./scripts/manage_dir.php", {
             'action': 'delete',
             file: $(this).parent().attr('data-file'),
@@ -99,24 +77,19 @@ $arrFiles = getFilesInfo($file);
     $('.rename').click(function(e) {
         e.preventDefault();
         $('#renameModalCenter').modal('toggle');
-
         let file = $(this).parent().attr('data-file');
         $('#renameForm-file').val(file);
     });
 
-
     $('#formRename').submit(function(e) {
         e.preventDefault();
-
         $delFile = $(this).find('[name="directory-file"]');
         $dir = $(this).find('[name="directory-name"]');
-
         $dir.val().length && $.post("./scripts/manage_dir.php", {
             'action': 'rename',
             file: $delFile.val(),
             dirname: $dir.val(),
         }, function(data) {
-            console.log(data);
             if (data.status) {
                 window.location.reload();
             } else {

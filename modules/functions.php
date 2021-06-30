@@ -168,6 +168,19 @@ function is_image($tmp)
     }
 }
 
+function formatDate($date)
+{
+    $todayHour = date("H:i", $date);
+    $creationDayFormatted = gmdate("Y D d", $date);
+    $creationDay = gmdate("Y/m/d", $date);
+    $today = (date("Y/m/d"));
+
+    if ($today == $creationDay) {
+        echo ($todayHour);
+    } else {
+        echo ($creationDayFormatted);
+    }
+}
 /*
  * Search Functions
  * The same result is achieved in two different ways
@@ -189,6 +202,7 @@ function searchFiles($dir, $search)
         }
         return $results;
     }
+
     if (str_contains($bsName, $search))
         return $dir;
 }
@@ -209,6 +223,7 @@ function searchFilesClass($dir, $search)
             if (str_contains($bsName, $search)) $files[] = $folder;
             continue;
         }
+
         $bsName = strtolower(basename($info->getPathname()));
         if (str_contains($bsName, $search)) $files[] = $info->getPathname();
     }

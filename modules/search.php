@@ -16,18 +16,15 @@
 <script>
     $('#search-input').on('input', function(e) {
         e.preventDefault();
-        dir = '<?= $_GET["file"] ?? "" ?>';
-        search = $(this).val();
-
+        const dir = '<?= $_GET["file"] ?? "" ?>',
+            search = $(this).val();
         let formData = new FormData();
         formData.append("dir", dir);
         formData.append("search", search);
-
         $(this).val().length && $.post("./scripts/search_files.php", {
             search,
             dir,
         }, function(data) {
-            console.log(data);
             list(data);
         }, 'json');
     });
@@ -61,7 +58,6 @@
                     .append($(`<div class='col-sm'>${value.icon} ${value.name}</div>`))
                     .append($(`<div class='col-sm'>${value.path}</div>`))
                     .append($("<div class='col-sm-2'></div>"));
-
                 $('.search-result').append(content);
             })
         } else {
