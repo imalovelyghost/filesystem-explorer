@@ -27,7 +27,7 @@
             search,
             dir,
         }, function(data) {
-            console.log(data)
+            // console.log(data)
             list(data);
         }, 'json');
     });
