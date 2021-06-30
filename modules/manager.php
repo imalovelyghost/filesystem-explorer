@@ -29,6 +29,9 @@ $arrFiles = getFilesInfo($file);
                         <?php formatDate($entry["mtime"]); ?>
                     </div>
                     <div class="col-sm">
+                        <?= $entry["ext"] ?: '--'; ?>
+                    </div>
+                    <div class="col-sm">
                         <?= FormatSize($entry); ?>
                     </div>
                     <div class="col-sm-2 d-flex justify-content-end">

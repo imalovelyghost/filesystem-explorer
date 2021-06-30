@@ -56,6 +56,9 @@ require_once('./modules/functions.php');
                                             Modified
                                         </div>
                                         <div class="col-sm">
+                                            ext
+                                        </div>
+                                        <div class="col-sm">
                                             Size
                                         </div>
                                         <div class="col-sm-2">
