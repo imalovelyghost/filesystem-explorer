@@ -1,4 +1,10 @@
 <?php
+
+/********************************
+Simple PHP File Manager
+Copyright Brahim & Einar
+ */
+
 $file = $_GET['file'] ?? '.';
 $newName =  $_POST["dirname"] ?? '';
 

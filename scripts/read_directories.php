@@ -1,4 +1,10 @@
 <?php
+
+/********************************
+Simple PHP File Manager
+Copyright Brahim & Einar
+ */
+
 $file = $_GET['file'] ?? '';
 $directory  = "../root/" . $file;
 $scanned_directory = array_diff(scandir($directory), array('..', '.'));

@@ -53,7 +53,7 @@ $arrFiles = getFilesInfo($file);
                             <button class="btn " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fa fa-ellipsis-h"></i>
                             </button>
-                            <div class="dropdown-menu" data-file="<?= $entry["path"]; ?>" aria-labelledby="dropdownMenuButton">
+                            <div class="dropdown-menu shadow-lg" data-file="<?= $entry["path"]; ?>" aria-labelledby="dropdownMenuButton">
                                 <a class="dropdown-item delete" href="#">Delete</a>
                                 <a class="dropdown-item rename" href="#">Rename</a>
                                 <a class="dropdown-item" href="#">Download</a>

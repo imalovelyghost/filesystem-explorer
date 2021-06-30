@@ -18,3 +18,19 @@ body {
     0 2px 6px 0 rgb(206 206 238 / 54%);
   /* min-height: 55vh; */
 }
+
+.input-file {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.side-alert {
+  position: fixed;
+  left: 25vw;
+  bottom: 0;
+  width: 50vw;
+}
