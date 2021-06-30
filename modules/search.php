@@ -54,7 +54,7 @@
         if (data.results.length) {
             $.each(data.results, function(index, value) {
                 const content = $("<div></div>")
-                    .addClass('row')
+                    .addClass('row border-bottom my-2')
                     .append($(`<div class='col-sm'>${value.icon} ${value.name}</div>`))
                     .append($(`<div class='col-sm'>${value.path}</div>`))
                     .append($("<div class='col-sm-2'></div>"));

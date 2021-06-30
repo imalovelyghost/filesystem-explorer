@@ -15,23 +15,23 @@ $arrFiles = getFilesInfo($file);
         if (is_array($arrFiles)) {
             foreach ($arrFiles as $entry) {
         ?>
-                <div class="row">
-                    <div class="col-sm">
+                <div class="row border-bottom my-2">
+                    <div class="col-sm cut-text">
                         <?php
                         echo fileIcon($entry);
                         echo getAnchor($entry);
                         ?>
                     </div>
-                    <div class="col-sm">
+                    <div class="col-sm opacity-8">
                         <?php formatDate($entry["ctime"]); ?>
                     </div>
-                    <div class="col-sm">
+                    <div class="col-sm opacity-8">
                         <?php formatDate($entry["mtime"]); ?>
                     </div>
-                    <div class="col-sm">
+                    <div class="col-sm opacity-8">
                         <?= $entry["ext"] ?: '--'; ?>
                     </div>
-                    <div class="col-sm">
+                    <div class="col-sm opacity-8">
                         <?= FormatSize($entry); ?>
                     </div>
                     <div class="col-sm-2 d-flex justify-content-end">

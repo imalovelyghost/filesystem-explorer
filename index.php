@@ -44,13 +44,17 @@ require_once('./modules/functions.php');
                         ?>
                         <div class="mt-3">
                             <div class="container">
+                                <?php
+                                require_once('./modules/folders.php');
+                                ?>
+                                <h5>Files</h5>
                                 <div class="files-container">
-                                    <div class="row">
+                                    <div class="row border-top border-bottom my-2 py-2 bg-light font-weight-bold">
                                         <div class="col-sm">
                                             Name
                                         </div>
                                         <div class="col-sm">
-                                            Creation date
+                                            Created
                                         </div>
                                         <div class="col-sm">
                                             Modified
@@ -70,7 +74,7 @@ require_once('./modules/functions.php');
                                     ?>
                                 </div>
                                 <div class="search-container d-none">
-                                    <div class="row">
+                                    <div class="row border-top border-bottom my-2 py-2 bg-light font-weight-bold">
                                         <div class="col-sm">
                                             Name
                                         </div>
