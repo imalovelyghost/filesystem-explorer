@@ -77,7 +77,6 @@ $MAX_UPLOAD_SIZE = min(asBytes(ini_get('post_max_size')), asBytes(ini_get('uploa
 <script>
     $('#mkdir').submit(function(e) {
         e.preventDefault();
-
         $dir = $(this).find('[name="directory-name"]');
         $dir.val().length && $.post("<?= $path ?>", {
             'action': 'mkdir',
@@ -103,15 +102,13 @@ $MAX_UPLOAD_SIZE = min(asBytes(ini_get('post_max_size')), asBytes(ini_get('uploa
     })
 
     function uploadFile(file) {
-        const MAX_UPLOAD_SIZE = <?= $MAX_UPLOAD_SIZE ?>;
-        const MAX_SIZE_FORMATTED = "<?= $MAX_SIZE_FORMATTED ?>";
-        const dir = "<?= $file ?>";
-
+        const MAX_UPLOAD_SIZE = <?= $MAX_UPLOAD_SIZE ?>,
+            MAX_SIZE_FORMATTED = "<?= $MAX_SIZE_FORMATTED ?>",
+            dir = "<?= $file ?>";
         let formData = new FormData();
         formData.append("do", "upload-file");
         formData.append("file", file);
         formData.append("dir", dir);
-
         if (file.size > MAX_UPLOAD_SIZE) {
             $('#danger-alert').addClass('show');
             $('#danger-alert').
@@ -121,7 +118,6 @@ $MAX_UPLOAD_SIZE = min(asBytes(ini_get('post_max_size')), asBytes(ini_get('uploa
             }, 5000);
             return;
         }
-
         $.ajax({
                 xhr: xhrProgressBar,
                 url: "./scripts/upload_files.php",
