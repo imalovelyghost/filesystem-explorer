@@ -41,11 +41,20 @@ $path = "./scripts/manage_dir.php?file=" . $file;
 
         <!-- Upload Async Test -->
 
-        <form enctype="multipart/form-data">
+        <div id="container">
+
+            <input type="file" name="fileToUpload form-control"></input><br>
+            <input type="text" placeholder="File name" id="filename" class="form-control"><br>
+            <button class="btn btn-success" onclick="uploadfile()">UPLOAD</button>
+
+        </div>
+
+
+        <!-- <form enctype="multipart/form-data">
             <input name="file" type="file" /><br><br>
             <input type="button" value="Upload" /><br><br>
         </form>
-        <progress></progress><br><br>
+        <progress></progress><br><br> -->
 
         <!-- END -->
 
@@ -89,48 +98,80 @@ $path = "./scripts/manage_dir.php?file=" . $file;
 
     //Upload Async
 
-    $(':file').on('change', function() {
-        var file = this.files[0];
+    function uploadfile() {
+        var filename = $('#filename').val();
+        var file_data = $('fileToUpload').prop('files')[0];
+        var form_data = new FormData();
+        form_data.append("file", file_data);
+        form_data.append("filename", filename);
 
-        if (file.size > 1024) {
-            alert('max upload size is 1k');
-        }
-        console.log(file.size);
+        //Ajax send file to upload
 
-        // Also see .name, .type
-    });
-
-    $(':button').on('click', function() {
         $.ajax({
-            // Your server script to process the upload
-            url: 'aside.php',
-            type: 'POST',
-
-            // Form data
-            data: new FormData($('form')[0]),
-
-            // Tell jQuery not to process data or worry about content-type
-            // You *must* include these options!
+            type: "POST",
+            url: "load.php", //Server api to recieve the file
+            data: form_data,
+            dataType: "script",
             cache: false,
             contentType: false,
             processData: false,
 
-            // Custom XMLHttpRequest
-            xhr: function() {
-                var myXhr = $.ajaxSettings.xhr();
-                if (myXhr.upload) {
-                    // For handling the progress of the upload
-                    myXhr.upload.addEventListener('progress', function(e) {
-                        if (e.lengthComputable) {
-                            $('progress').attr({
-                                value: e.loaded,
-                                max: e.total,
-                            });
-                        }
-                    }, false);
-                }
-                return myXhr;
+
+            success: function(dat2) {
+                if (dat2 == 1) alert("YASSSS Success!!!!");
+                else alert("unable to upload");
+
             }
         });
-    });
+
+    }; //END
+
+
+
+
+
+    // $(':file').on('change', function() {
+    //     var file = this.files[0];
+
+    //     if (file.size > 1024) {
+    //         alert('max upload size is 1k');
+    //     }
+    //     console.log(file.size);
+
+    //     // Also see .name, .type
+    // });
+
+    // $(':button').on('click', function() {
+    //     $.ajax({
+    //         // Your server script to process the upload
+    //         url: 'aside.php',
+    //         type: 'POST',
+
+    //         // Form data
+    //         data: new FormData($('form')[0]),
+
+    //         // Tell jQuery not to process data or worry about content-type
+    //         // You *must* include these options!
+    //         cache: false,
+    //         contentType: false,
+    //         processData: false,
+
+    //         // Custom XMLHttpRequest
+    //         xhr: function() {
+    //             var myXhr = $.ajaxSettings.xhr();
+    //             if (myXhr.upload) {
+    //                 // For handling the progress of the upload
+    //                 myXhr.upload.addEventListener('progress', function(e) {
+    //                     if (e.lengthComputable) {
+    //                         $('progress').attr({
+    //                             value: e.loaded,
+    //                             max: e.total,
+    //                         });
+    //                     }
+    //                 }, false);
+    //             }
+    //             return myXhr;
+    //         }
+    //     });
+    // });
 </script>
