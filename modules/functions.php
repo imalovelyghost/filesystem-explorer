@@ -48,6 +48,7 @@ function statFiles($file)
         'size' => $stat['size'],
         'name' => basename($file),
         'path' => deleteRoot($file),
+        'ext' => pathinfo($file, PATHINFO_EXTENSION),
         'is_dir' => is_dir($file),
         'is_media' => is_audio($file) || is_video($file),
         'is_image' => is_image($file),
