@@ -19,11 +19,19 @@ $MAX_UPLOAD_SIZE = min(asBytes(ini_get('post_max_size')), asBytes(ini_get('uploa
             </button>
             <div class="dropdown-menu shadow-lg" data-file="<?= $entry["path"]; ?>" aria-labelledby="dropdownMenuButton">
                 <button type="button" class="dropdown-item" data-toggle="modal" data-target="#exampleModalCenter">
-                    Directory
+                    <i class="bi bi-folder-plus"></i>
+                    <span>Directory</span>
                 </button>
                 <button type="button" class="dropdown-item">
-                    <label for="file">Upload file</label>
+                    <label for="file" class="m-0">
+                        <i class="bi bi-file-arrow-up"></i>
+                        <span>Upload file</span>
+                    </label>
                     <input type="file" name="file" id="file" class="input-file" multiple />
+                </button>
+                <button type="button" class="dropdown-item">
+                    <i class="bi bi-folder-symlink"></i>
+                    <span>Upload folder</span>
                 </button>
             </div>
         </div>
@@ -54,13 +62,13 @@ $MAX_UPLOAD_SIZE = min(asBytes(ini_get('post_max_size')), asBytes(ini_get('uploa
 
         <h5 class="my-3">File Explorer</h5>
         <div class="fm-menu">
-            <div class="list-group list-group-flush"> <a href="javascript:;" class="list-group-item py-1"><i class="bx bx-folder me-2"></i><span>All Files</span></a>
-                <a href="./" class="list-group-item py-1"><i class="bx bx-devices me-2"></i><span>Root</span></a>
-                <a href="javascript:;" class="list-group-item py-1"><i class="bx bx-analyse me-2"></i><span>Documents</span></a>
-                <a href="javascript:;" class="list-group-item py-1"><i class="bx bx-plug me-2"></i><span>Images</span></a>
-                <a href="javascript:;" class="list-group-item py-1"><i class="bx bx-plug me-2"></i><span>Audio</span></a>
-                <a href="javascript:;" class="list-group-item py-1"><i class="bx bx-plug me-2"></i><span>Video</span></a>
-                <a href="javascript:;" class="list-group-item py-1"><i class="bx bx-trash-alt me-2"></i><span>Deleted Files</span></a>
+            <div class="list-group list-group-flush"> <a href="javascript:;" class="list-group-item py-1"><i class="bi bi-files-alt"></i><span> All Files</span></a>
+                <a href="./" class="list-group-item py-1"><i class="bi bi-folder"></i><span> Root</span></a>
+                <a href="javascript:;" class="list-group-item py-1"><i class="bi bi-folder-minus"></i><span> Documents</span></a>
+                <a href="javascript:;" class="list-group-item py-1"><i class="bi bi-image-fill"></i><span> Images</span></a>
+                <a href="javascript:;" class="list-group-item py-1"><i class="bi bi-record-btn"></i><span> Audio</span></a>
+                <a href="javascript:;" class="list-group-item py-1"><i class="bi bi-camera-video"></i><span> Video</span></a>
+                <a href="javascript:;" class="list-group-item py-1"><i class="bi bi-archive"></i><span> Deleted Files</span></a>
             </div>
         </div>
     </div>

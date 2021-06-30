@@ -51,7 +51,7 @@ $arrFiles = getFilesInfo($file);
                     <div class="col-sm-2 d-flex justify-content-end">
                         <div class="dropdown">
                             <button class="btn " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fa fa-ellipsis-h"></i>
+                                <i class="bi bi-three-dots"></i>
                             </button>
                             <div class="dropdown-menu shadow-lg" data-file="<?= $entry["path"]; ?>" aria-labelledby="dropdownMenuButton">
                                 <a class="dropdown-item delete" href="#">Delete</a>
@@ -111,7 +111,7 @@ $arrFiles = getFilesInfo($file);
             file: $delFile.val(),
             dirname: $dir.val(),
         }, function(data) {
-            console.log(data)
+            console.log(data);
             if (data.status) {
                 window.location.reload();
             } else {
@@ -124,5 +124,12 @@ $arrFiles = getFilesInfo($file);
 
     $('#renameModalCenter').on('shown.bs.modal', function() {
         $('#renameForm-name').trigger('focus');
-    })
+    });
+
+    $('a[data-type="iframe"], [data-type="image"]').each(function() {
+        $(this).magnificPopup({
+            type: $(this).attr('data-type'),
+            src: $(this).attr('href'),
+        });
+    });
 </script>
