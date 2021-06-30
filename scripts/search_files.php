@@ -17,7 +17,7 @@ foreach ($data['paths']  as $value) {
     $statResult = statFiles($value);
     $arrInfo[] = [
         'path' => $statResult['path'],
-        'name' =>  highlighSearch($statResult['name'], $search),
+        'name' =>  getAnchor($statResult, highlight($statResult['name'], $search)),
         'icon' => fileIcon($statResult),
     ];
 }
@@ -29,7 +29,7 @@ $data['search'] = $search;
 $data['dir'] =  $dir;
 echo json_encode($data);
 
-function highlighSearch($name, $search)
+function highlight($name, $search)
 {
     $strAfter = stristr($name, $search);
     $strSearch = substr($strAfter, 0, strlen($search));

@@ -27,12 +27,22 @@
             search,
             dir,
         }, function(data) {
-            // console.log(data)
+            console.log(data);
             list(data);
         }, 'json');
     });
 
     $('#search-input').blur(function(e) {
+        if (!$(this).val().length) {
+            $('.files-container').removeClass('d-none');
+            $('.search-container').addClass('d-none');
+        }
+    });
+
+    $('#search-input').keyup(function(e) {
+        if (e.keyCode == 27) {
+            $(this).val("");
+        }
         if (!$(this).val().length) {
             $('.files-container').removeClass('d-none');
             $('.search-container').addClass('d-none');
@@ -57,5 +67,12 @@
         } else {
             $('.search-result').append("No results found");
         }
+
+        $('a[data-type="iframe"], [data-type="image"]').each(function() {
+            $(this).magnificPopup({
+                type: $(this).attr('data-type'),
+                src: $(this).attr('href'),
+            });
+        });
     }
 </script>

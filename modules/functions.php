@@ -47,7 +47,7 @@ function statFiles($file)
         'ctime' => $stat['ctime'],
         'size' => $stat['size'],
         'name' => basename($file),
-        'path' => str_replace('./root/', '', $file),
+        'path' => deleteRoot($file),
         'is_dir' => is_dir($file),
         'is_media' => is_audio($file) || is_video($file),
         'is_image' => is_image($file),
@@ -58,29 +58,39 @@ function statFiles($file)
 }
 
 /*
+ */
+function deleteRoot($path)
+{
+    if (str_contains($path, 'root')) {
+        $path = str_replace('../', '', $path);
+        $path = str_replace('./', '', $path);
+        $path = str_replace('root//', '', $path);
+        $path = str_replace('root/', '', $path);
+        $path = str_replace('root\\', '', $path);
+        $path = str_replace('root', '', $path);
+        return $path;
+    }
+}
+
+/*
 */
-function getAnchor($entry)
+function getAnchor($entry, $nameSearch = "")
 {
     $name = $entry["name"];
-    $href = isset($_GET['file']) ? $_GET['file'] . '/' . $name :  $name;
+    $path = $entry["path"];
+    $href = './root/' . $entry["path"];
+    $anchorName = $nameSearch ?: $name;
     $type = 'unknown';
 
-    echo fileIcon($entry);
-
     if ($entry["is_dir"]) {
-        echo "<a href=\"?file=$href\"data-type=\"dir\"> 
-            $name 
-        </a>";
-        return;
+        return " <a href=\"?file=$path\" data-type=\"dir\">$anchorName</a>";
     }
     if ($entry["is_media"]) {
         $type  = 'iframe';
     } elseif ($entry["is_image"]) {
         $type  = 'image';
     }
-    echo "<a href= \"./root/$href\"data-type=\"$type\"> 
-            $name 
-        </a>";
+    return " <a href=\"$href\" data-type=\"$type\">$anchorName</a>";
 }
 
 /*

@@ -17,7 +17,10 @@ $arrFiles = getFilesInfo($file);
         ?>
                 <div class="row">
                     <div class="col-sm">
-                        <?= getAnchor($entry); ?>
+                        <?php
+                        echo fileIcon($entry);
+                        echo getAnchor($entry);
+                        ?>
                     </div>
                     <div class="col-sm">
                         <?php
