@@ -14,22 +14,11 @@ $dir = "../root/" . $dir;
 $data['paths'] = searchFilesClass($dir, $search);
 
 foreach ($data['paths']  as $value) {
-    $stat = stat($value);
-    $result[] = [
-        'size' => $stat['size'],
-        'name' => basename($value),
-        'path' => $value,
-        'is_dir' => is_dir($value),
-        'is_media' => is_audio($value) || is_video($value),
-        'is_image' => is_image($value),
-    ];
-}
-$filesInfo = $result ?? [];
-foreach ($filesInfo as $entry) {
+    $statResult = statFiles($value);
     $arrInfo[] = [
-        'path' => $entry['path'],
-        'name' =>  $entry['name'],
-        'icon' => fileIcon($entry),
+        'path' => $statResult['path'],
+        'name' =>  $statResult['name'],
+        'icon' => fileIcon($statResult),
     ];
 }
 

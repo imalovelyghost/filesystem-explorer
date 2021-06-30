@@ -28,29 +28,33 @@ function FormatSize($file)
  */
 function getFilesInfo($path)
 {
-    $directory  = (dirname(__DIR__) . "/root/" . $path);
+    $directory  = ("./root/" . $path);
     $scanned_directory = array_diff(scandir($directory), array('..', '.'));
-
     foreach ($scanned_directory as $entry) {
-        $i = $directory . '/' . $entry;
-        $stat = stat($i);
-        $result[] = [
-            'mtime' => $stat['mtime'],
-            'ctime' => $stat['ctime'],
-            'size' => $stat['size'],
-            'name' => basename($i),
-            // 'path' => preg_replace('@^\./@', '', $stat),
-            'path' => $path ?  $path  . '/' . $entry :  $entry,
-            'is_dir' => is_dir($i),
-            'is_media' => is_audio($i) || is_video($i),
-            'is_image' => is_image($i),
-            'is_readable' => is_readable($i),
-            'is_writable' => is_writable($i),
-            'is_executable' => is_executable($i),
-        ];
+        $iRoute = $directory . '/' . $entry;
+        $result[] = statFiles($iRoute);
     }
-    // print_r($result);
     return $result ?? 'This folder is empty';
+}
+
+/*
+ */
+function statFiles($file)
+{
+    $stat = stat($file);
+    return [
+        'mtime' => $stat['mtime'],
+        'ctime' => $stat['ctime'],
+        'size' => $stat['size'],
+        'name' => basename($file),
+        'path' => str_replace('./root/', '', $file),
+        'is_dir' => is_dir($file),
+        'is_media' => is_audio($file) || is_video($file),
+        'is_image' => is_image($file),
+        'is_readable' => is_readable($file),
+        'is_writable' => is_writable($file),
+        'is_executable' => is_executable($file),
+    ];
 }
 
 /*
