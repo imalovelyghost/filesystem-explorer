@@ -1,4 +1,3 @@
 # Ignores root directory 
 root
 .vscode
-libs
