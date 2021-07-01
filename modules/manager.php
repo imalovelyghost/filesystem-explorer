@@ -113,4 +113,20 @@ $arrFiles = getFilesInfo($file);
             src: $(this).attr('href'),
         });
     });
+
+    $('.draggable')
+        .on('dragover', function() {
+            $(this).addClass('drag_over');
+            return false;
+        }).on('dragleave', function() {
+            $(this).removeClass('drag_over');
+            return false;
+        }).on('drop', function(e) {
+            e.preventDefault();
+            var files = e.originalEvent.dataTransfer.files;
+            $.each(files, function(k, file) {
+                uploadFile(file);
+            });
+            $(this).removeClass('drag_over');
+        });
 </script>

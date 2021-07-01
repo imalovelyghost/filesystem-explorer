@@ -43,7 +43,7 @@ require_once('./modules/functions.php');
                         require_once('./modules/search.php');
                         ?>
                         <div class="mt-3">
-                            <div class="container">
+                            <div class="container draggable">
                                 <?php
                                 require_once('./modules/folders.php');
                                 ?>
