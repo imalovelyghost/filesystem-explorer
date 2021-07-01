@@ -4,6 +4,7 @@
 Simple PHP File Manager
 Copyright Brahim & Einar
  */
+require_once('../modules/functions.php');
 
 $file = $_GET['file'] ?? '.';
 $newName =  $_POST["dirname"] ?? '';
@@ -32,7 +33,7 @@ if ($_POST['action'] == 'mkdir') {
     $newPath = dirname($basePath) . '/' .  $newName;
 
     try {
-        $data['status'] = checkIfExists($basePath, $newPath);
+        $data['status'] = renameFile($basePath, $newPath);
     } catch (Throwable $th) {
         $data['status'] = false;
         $data['msg'] = $th->getMessage();
@@ -61,10 +62,17 @@ function removeDir($dir)
     }
 }
 
-function checkIfExists($basePath, $newPath)
+function renameFile($basePath, $newPath)
 {
     if (file_exists($newPath)) {
         throw new Exception('Directory already exists');
     }
+    if (!is_dir($basePath)) {
+        $newEntry = pathinfo($newPath, PATHINFO_EXTENSION);
+        $entry = pathinfo($basePath, PATHINFO_EXTENSION);
+        $newPath =  strlen($newEntry) ?
+            $newPath : $newPath . '.' . $entry;
+    }
+
     return rename($basePath, $newPath);
 }
