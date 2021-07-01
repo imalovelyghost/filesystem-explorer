@@ -44,3 +44,8 @@ body {
 .opacity-8 {
   opacity: 0.8;
 }
+
+.drag_over {
+  border: 4px dashed #96c4ea;
+  color: #96c4ea;
+}
