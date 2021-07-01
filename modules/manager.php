@@ -123,7 +123,7 @@ $arrFiles = getFilesInfo($file);
             return false;
         }).on('drop', function(e) {
             e.preventDefault();
-            var files = e.originalEvent.dataTransfer.files;
+            let files = e.originalEvent.dataTransfer.files;
             $.each(files, function(k, file) {
                 uploadFile(file);
             });
