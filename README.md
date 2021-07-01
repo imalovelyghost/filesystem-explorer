@@ -1,7 +1,6 @@
 `#html` `#css` `#js` `#php` `#master-in-software-engineering`
 
 # PHP Local FileSystem explorer <!-- omit in toc -->
-
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-1.0-blue.svg?cacheSeconds=2592000" />
 </p>
@@ -12,65 +11,83 @@
 
 
 ## Index <!-- omit in toc -->
-
-- [Requirements](#requirements)
-- [Repository](#repository)
+- [Getting started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installing](#installing)
+- [Branches naming strategy](#branches-naming-strategy)
+- [Tests](#tests)
+- [Libraries](#libraries)
 - [Technologies used](#technologies-used)
-- [Project delivery](#project-delivery)
 - [Resources](#resources)
+- [License](#license)
+- [Contributors ✨](#contributors-)
 
-## Requirements
+## Getting started
+This project was made to learn how to create a system file explorer that allows the user to navigate, create directories and upload files in the same way as he would in his usual operating system. 
 
-- You cannot use file third-party libraries
-- You will not be able to use global variables in PHP.
-- You must use GIT
-- You must use the PHP > v7
-- Create a clear and orderly directory structure
-- Both the code and the comments must be written in English
-- Use the camelCase code style to define variables and functions
-- In the case of using HTML, never use inline styles
-- In the case of using different programming languages ​​always define the implementation in separate terms
-- Remember that it is important to divide the tasks into several sub-tasks so that in this way you can associate each particular step of the construction with a specific commit
-- You should try as much as possible that the commits and the planned tasks are the same
-Delete files that are not used or are not necessary to evaluate the project
+### Prerequisites
+First, you need XAMPP, you can download it from [here](https://www.apachefriends.org/es/index.html).
 
-## Repository
+You also need the latest version of PHP. We currently use PHP 8
 
-First of all you must fork this project into your GitHub account.
+### Installing
+Clone this project in your htdocs folder:
 
-To create a fork on GitHub is as easy as clicking the “fork” button on the repository page.
+```
+git clone https://github.com/imalovelyghost/filesystem-explorer.git
+```
 
-<img src="https://docs.github.com/assets/images/help/repository/fork_button.jpg" alt="Fork on GitHub" width='450'>
+## Branches naming strategy
+- main: includes the main product
+- `F/<number>`: a feature implementation branch
+- `D/<number>`: a document branch
+
+## Tests
+There are yet no tests for this project.
+
+## Libraries
+\* Magnific-Popup
+
+\* Bootstrap
+
+\* Bootstrap Icons
+
+\* LineIcons
 
 ## Technologies used
-
 \* HTML
 
 \* CSS
 
-\* JS
+\* jQuery v3.6
 
-\* PHP
-
-## Project delivery
-
-To deliver this project you must follow the steps indicated in the document:
-
-- [Submitting a solution](https://www.notion.so/Submitting-a-solution-524dab1a71dd4b96903f26385e24cdb6)
-
-- You must include the project documentation in PDF format.
-- You must include a presentation in PDF format explaining:
-  - Comparison of the original design (Wireframe) with the final result of the project
-  - Comparison of the use case diagram with the actions that the user can finally perform
-  - Comparison of the original use case diagram with the final user actions
-  - What lessons you’ve learned during this project
-  - What problems have you encountered when developing this project?
-  - How you have organized and distributed the tasks
-
+\* PHP v8
 
 ## Resources
-
 - [File system](https://es.wikipedia.org/wiki/Administrador_de_archivos)
 - [PHP FileSystem W3C](https://www.w3schools.com/php/php_ref_filesystem.asp)
 - [PHP FileSystem Oficial](https://www.php.net/manual/es/book.filesystem.php)
 - [README Guidelines Example](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2)
+
+## License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
+
+## Contributors ✨
+Thanks goes to these wonderful people([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+   <td align="center"><a href="https://github.com/imalovelyghost"><img src="https://avatars.githubusercontent.com/u/79602817?v=4" width="100px;" alt=""/><br /><sub><b>imalovelyghost</b></sub></a><br /><a href="https://github.com/imalovelyghost/filesystem-explorer/commits?author=imalovelyghost" title="Code">💻</a> <a href="#design-imalovelyghost" title="Design">🎨</a> <a href="#ideas-imalovelyghost" title="Ideas, Planning, & Feedback">🤔</a> <a href="#projectManagement-imalovelyghost" title="Project Management">📆</a></td>
+
+   <td align="center"><a href="https://github.com/bbenalia"><img src="https://avatars.githubusercontent.com/u/65949632?v=4?s=100" width="100px;" alt=""/><br /><sub><b>bbenalia</b></sub></a><br /><a href="https://github.com/imalovelyghost/filesystem-explorer/commits?author=bbenalia" title="Code">💻</a> <a href="#design-bbenalia" title="Design">🎨</a> <a href="#ideas-bbenalia" title="Ideas, Planning, & Feedback">🤔</a> <a href="#projectManagement-bbenalia" title="Project Management">📆</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
