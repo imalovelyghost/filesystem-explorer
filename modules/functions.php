@@ -28,7 +28,7 @@ function FormatSize($file)
  */
 function getFilesInfo($path)
 {
-    $directory  = ("./root/" . $path);
+    $directory  = (ROOT_PATH . $path);
     $scanned_directory = array_diff(scandir($directory), array('..', '.'));
     foreach ($scanned_directory as $entry) {
         $iRoute = $directory . '/' . $entry;
@@ -79,7 +79,7 @@ function getAnchor($entry, $nameSearch = "")
 {
     $name = $entry["name"];
     $path = $entry["path"];
-    $href = './root/' . $entry["path"];
+    $href = ROOT_PATH . $entry["path"];
     $anchorName = $nameSearch ?: $name;
     $type = 'unknown';
 
@@ -167,6 +167,18 @@ function is_image($tmp)
     } else {
         return false;
     }
+}
+
+/*
+*/
+function getFilesCount($dir)
+{
+    $dir = ROOT_PATH . $dir;
+    if (is_dir($dir)) {
+        $files = array_diff(scandir($dir), ['.', '..']);
+        return count($files);
+    }
+    return 0;
 }
 
 function formatDate($date)
