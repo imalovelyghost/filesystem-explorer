@@ -4,7 +4,10 @@
 Simple PHP File Manager
 Copyright Brahim & Einar
  */
+require_once('../constants/path.php');
 require_once('../modules/functions.php');
+
+session_start();
 
 $file = $_GET['file'] ?? '.';
 $newName =  $_POST["dirname"] ?? '';
@@ -13,23 +16,30 @@ $newName =  $_POST["dirname"] ?? '';
 $newName = str_replace('/', '', $newName);
 
 if ($_POST['action'] == 'mkdir') {
-    $basePath = "../root/" . $file;
+    $basePath = ROOT_PATH_BACK . $file;
 
     chdir($basePath);
-
-    $data['status'] = mkdir($newName, 0777);
+    try {
+        $data['status'] = mkdirCheck($newName);
+    } catch (Throwable $th) {
+        $data['status'] = false;
+        $data['msg'] = $th->getMessage();
+    }
     $data['file'] = $file;
 } elseif ($_POST['action'] == 'delete') {
     if (isset($_POST['file'])) {
-        $basePath = "../root/" .  $_POST['file'];
+        $basePath = ROOT_PATH_BACK .  $_POST['file'];
 
         removeDir($basePath);
+
+        if (in_array($_POST['file'], $_SESSION['recentFolders']))
+            $_SESSION['recentFolders'] = array_diff($_SESSION['recentFolders'], [$_POST['file']]);
 
         $data['status'] = !file_exists($basePath);
         $data['file'] = $basePath;
     }
 } elseif ($_POST['action'] == 'rename') {
-    $basePath = "../root/" .  $_POST['file'];
+    $basePath = ROOT_PATH_BACK .  $_POST['file'];
     $newPath = dirname($basePath) . '/' .  $newName;
 
     try {
@@ -75,4 +85,12 @@ function renameFile($basePath, $newPath)
     }
 
     return rename($basePath, $newPath);
+}
+
+function mkdirCheck($name)
+{
+    if (file_exists($name)) {
+        throw new Exception('Directory already exists');
+    }
+    return mkdir($name, 0777);
 }

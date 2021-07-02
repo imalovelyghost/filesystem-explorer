@@ -5,11 +5,12 @@ Simple PHP File Manager
 Copyright Brahim & Einar
  */
 
+require_once('../constants/path.php');
 require_once('../modules/functions.php');
 
 $search = $_POST['search'] ?? '';
 $dir = $_POST['dir'] ?? '';
-$dir = "../root/" . $dir;
+$dir = ROOT_PATH_BACK . $dir;
 
 $data['paths'] = searchFilesClass($dir, $search);
 

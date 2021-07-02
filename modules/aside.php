@@ -49,6 +49,9 @@ $MAX_UPLOAD_SIZE = min(asBytes(ini_get('post_max_size')), asBytes(ini_get('uploa
                     <form action="" method="post" id="mkdir">
                         <div class="modal-body">
                             <input type="text" id="defaultForm-name" name="directory-name" placeholder="Insert directory name" class="form-control validate">
+                            <div class="invalid-feedback defaultForm-name">
+                                error message
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -86,6 +89,8 @@ $MAX_UPLOAD_SIZE = min(asBytes(ini_get('post_max_size')), asBytes(ini_get('uploa
             if (data.status) {
                 window.location.reload();
             } else {
+                $('#defaultForm-name').addClass('is-invalid');
+                $('.defaultForm-name').text(data.msg);
                 console.log("Error doing ", data.action);
             }
         }, 'json');
