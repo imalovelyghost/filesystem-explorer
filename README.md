@@ -1,14 +1,10 @@
 `#html` `#css` `#js` `#php` `#master-in-software-engineering`
 
 # PHP Local FileSystem explorer <!-- omit in toc -->
+
 <p>
-  <img alt="Version" src="https://img.shields.io/badge/version-1.0-blue.svg?cacheSeconds=2592000" />
+  <img alt="Capture" src="./assets/img/capture.png" />
 </p>
-
->In this project you will have to create a system file explorer that allows the user to navigate, create directories and upload files in the same way as he would in his usual operating system. 
-
->The file explorer is a tool that allows you to directly view and manipulate the files and directories associated with a path, so you must take into account from which path the user starts and which path they can access.
-
 
 ## Index <!-- omit in toc -->
 - [Getting started](#getting-started)
