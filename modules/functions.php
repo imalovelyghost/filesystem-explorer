@@ -104,8 +104,16 @@ function fileIcon($file)
         return  '<i class="bi bi-file-earmark-image"></i>';
     } elseif ($file["is_media"]) {
         return '<i class="bi bi-file-earmark-play-fill"></i>';
+    } elseif ($file["ext"] == "pdf") {
+        return '<i class="bi bi-file-earmark-pdf"></i>';
+    } elseif ($file["ext"] == "ppt") {
+        return '<i class="bi bi-file-earmark-ppt"></i>';
+    } elseif ($file["ext"] == "zip") {
+        return '<i class="bi bi-file-earmark-zip"></i>';
+    } elseif ($file["ext"] == "txt") {
+        return '<i class="bi bi-file-earmark-text"></i>';
     } else {
-        return '<i class="bi bi-file-earmark"></i> ';
+        return '<i class="bi bi-file-earmark"></i>';
     }
 }
 
